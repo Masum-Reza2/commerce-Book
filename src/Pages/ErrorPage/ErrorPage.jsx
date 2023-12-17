@@ -11,10 +11,10 @@ const ErrorPage = () => {
                 <div className=''>
                     <Lottie animationData={errorJSON} loop={true} />
                 </div>
-                <div className='text-center pb-5  md:h-[60vh] md:flex md:flex-col md:items-center md:justify-center md:shadow-md md:border md:rounded-xl md:px-5 space-y-5'>
-                    <h1 className='font-bold text-xl md:text-2xl'>Oops!</h1>
-                    <p className='font-semibold'>Sorry, an unexpected error has occurred.</p>
-                    <p className='font-semibold'>
+                <div className='text-center pb-5  md:h-[60vh] md:flex md:flex-col md:items-center md:justify-center md:shadow-md md:border md:rounded-xl md:shadow-purple-900 md:px-5 space-y-5 font-bold'>
+                    <h1 className=' text-xl md:text-2xl text-red-700'>Oops!</h1>
+                    <p className='text-blue-700 '>Sorry, an unexpected error has occurred.</p>
+                    <p className=' text-red-700'>
                         <i>{error.statusText || error.message}</i>
                     </p>
                     <Link to={'/'}>
