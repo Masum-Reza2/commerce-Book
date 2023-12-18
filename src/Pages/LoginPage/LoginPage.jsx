@@ -1,3 +1,5 @@
+import { useForm } from "react-hook-form"
+
 import { useState } from "react"
 import AdditionalAuth from "../../Components/AdditionalAuth"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
@@ -12,12 +14,19 @@ const LoginPage = () => {
         setEye(!eye)
     }
 
-    const handleRegister = e => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm()
+
+    const onSubmit = (data) => {
+        console.log(data)
     }
     return (
         <div className="flex flex-col-reverse gap-10 px-2 lg:px-20 md:flex-row items-center justify-center  py-2 md:py-10 lg:py-0 lg:h-screen overflow-hidden md:gap-5 bg-[#cbd7fc]">
-            <form onSubmit={handleRegister} className="relative flex-1 flex flex-col w-full md:max-w-md lg:max-w-lg md: mx-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
+            <form onSubmit={handleSubmit(onSubmit)} className="relative flex-1 flex flex-col w-full md:max-w-md lg:max-w-lg md: mx-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
 
                 {/* heading */}
                 <div
@@ -33,6 +42,8 @@ const LoginPage = () => {
                     {/* email */}
                     <div className="relative h-11 w-full min-w-[200px]">
                         <input
+                            type="email"
+                            {...register("name")}
                             required
                             className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200 border-t-transparent text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                             placeholder=" " />
@@ -45,6 +56,7 @@ const LoginPage = () => {
                     {/* password */}
                     <div className="relative h-11 w-full min-w-[200px]">
                         <input
+                            {...register("password")}
                             type={eye ? "text" : "password"}
                             required
                             className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200 border-t-transparent text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
