@@ -7,14 +7,17 @@ import loginLottie from '../../assets/LottieAnimations/login (1).json'
 
 /* eslint-disable react/no-unescaped-entities */
 const LoginPage = () => {
-
     const [eye, setEye] = useState(false)
     const handleEye = () => {
         setEye(!eye)
     }
+
+    const handleRegister = e => {
+        e.preventDefault();
+    }
     return (
         <div className="flex flex-col-reverse gap-10 px-2 lg:px-20 md:flex-row items-center justify-center  py-2 md:py-10 lg:py-0 lg:h-screen overflow-hidden md:gap-5 bg-[#cbd7fc]">
-            <form className="relative flex-1 flex flex-col w-full md:max-w-md lg:max-w-lg md: mx-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
+            <form onSubmit={handleRegister} className="relative flex-1 flex flex-col w-full md:max-w-md lg:max-w-lg md: mx-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
 
                 {/* heading */}
                 <div

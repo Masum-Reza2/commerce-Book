@@ -1,3 +1,5 @@
+import { useForm } from "react-hook-form"
+
 import { Link } from "react-router-dom"
 import AdditionalAuth from "../../Components/AdditionalAuth"
 import Lottie from "lottie-react";
@@ -9,14 +11,25 @@ import { useState } from "react";
 
 /* eslint-disable react/no-unescaped-entities */
 const RegisterPage = () => {
-
     const [eye, setEye] = useState(false)
     const handleEye = () => {
         setEye(!eye)
     }
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm()
+
+    const onSubmit = (data) => {
+        console.log(data)
+    }
+
     return (
         <div className="flex flex-col-reverse gap-10 px-2 lg:px-20 md:flex-row items-center justify-center  py-2 md:py-10 lg:py-0 lg:h-screen overflow-hidden md:gap-5 bg-[#cbd7fc]">
-            <form className="relative flex-1 flex flex-col w-full md:max-w-md lg:max-w-lg md: mx-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
+            <form onSubmit={handleSubmit(onSubmit)} className="relative flex-1 flex flex-col w-full md:max-w-md lg:max-w-lg md: mx-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
 
                 {/* heading */}
                 <div
@@ -31,6 +44,7 @@ const RegisterPage = () => {
                     {/* Name */}
                     <div className="relative h-11 w-full min-w-[200px]">
                         <input
+                            {...register("name")}
                             required
                             className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200 border-t-transparent text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                             placeholder=" " />
@@ -43,6 +57,7 @@ const RegisterPage = () => {
                     {/* email */}
                     <div className="relative h-11 w-full min-w-[200px]">
                         <input
+                            {...register("email")}
                             required
                             className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200 border-t-transparent text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                             placeholder=" " />
@@ -55,6 +70,11 @@ const RegisterPage = () => {
                     {/* password */}
                     <div className="relative h-11 w-full min-w-[200px]">
                         <input
+                            {...register("password", {
+                                maxLength: 16,
+                                minLength: 8,
+                                pattern: /^(?=.*[A-Z])(?=.*\d).+/
+                            })}
                             type={eye ? "text" : "password"}
                             required
                             className="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200 border-t-transparent text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
@@ -64,6 +84,9 @@ const RegisterPage = () => {
                             Password
                         </label>
                         {eye ? <FaEyeSlash onClick={handleEye} className="absolute right-5 top-4 cursor-pointer" /> : <FaEye onClick={handleEye} className="absolute right-5 top-4 cursor-pointer" />}
+                        {errors?.password?.type === 'minLength' && <p className="text-xs text-red-600 font-bold">At least 8 characters</p>}
+                        {errors?.password?.type === 'maxLength' && <p className="text-xs text-red-600 font-bold">Less then 16 characters</p>}
+                        {errors?.password?.type === 'pattern' && <p className="text-xs text-red-600 font-bold">Add at least 1 capital letter and 1 number.</p>}
                     </div>
 
                     <div className="-ml-2.5">
