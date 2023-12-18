@@ -8,7 +8,6 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 
-
 /* eslint-disable react/no-unescaped-entities */
 const RegisterPage = () => {
     const [eye, setEye] = useState(false)

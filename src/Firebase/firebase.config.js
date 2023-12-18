@@ -1,13 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+const all = import.meta.env;
+
 const firebaseConfig = {
-    apiKey: "AIzaSyD3R5mqW8Dp9ahXUHuzZ8gR-lcNEwiEo3E",
-    authDomain: "commerce-book.firebaseapp.com",
-    projectId: "commerce-book",
-    storageBucket: "commerce-book.appspot.com",
-    messagingSenderId: "311030196048",
-    appId: "1:311030196048:web:03d2d767e44ecfb054ae55"
+    apiKey: all.VITE_apiKey,
+    authDomain: all.VITE_authDomain,
+    projectId: all.VITE_projectId,
+    storageBucket: all.VITE_storageBucket,
+    messagingSenderId: all.VITE_messagingSenderId,
+    appId: all.VITE_appId,
 };
 
 // Initialize Firebase
