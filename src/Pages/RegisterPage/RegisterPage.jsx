@@ -6,8 +6,8 @@ import registerLottie from './login (2).json'
 /* eslint-disable react/no-unescaped-entities */
 const RegisterPage = () => {
     return (
-        <div className="md:flex items-center justify-center  py-10 lg:py-0  overflow-hidden md:px-10 md:gap-5 bg-[#cbd7fc]">
-            <form className="relative flex-1 flex flex-col max-w-[22rem] md:max-w-md lg:max-w-lg md: mx-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
+        <div className="flex flex-col-reverse gap-10 px-2 lg:px-20 md:flex-row items-center justify-center  py-2 md:py-10 lg:py-0 lg:h-screen overflow-hidden md:gap-5 bg-[#cbd7fc]">
+            <form className="relative flex-1 flex flex-col w-full md:max-w-md lg:max-w-lg md: mx-auto text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
                 <div
                     className="relative grid mx-4 mb-4 -mt-6 overflow-hidden text-white shadow-lg h-28 place-items-center rounded-xl bg-[#5547b2]">
                     <h3 className="block font-sans text-3xl antialiased font-semibold leading-snug tracking-normal text-white">
