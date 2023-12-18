@@ -6,7 +6,10 @@ const Routes = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
+        children: [
+
+        ]
     },
 ])
 export default Routes
