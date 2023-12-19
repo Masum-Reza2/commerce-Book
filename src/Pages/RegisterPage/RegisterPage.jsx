@@ -1,19 +1,24 @@
 import { useForm } from "react-hook-form"
-
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import AdditionalAuth from "../../Components/AdditionalAuth"
 import Lottie from "lottie-react";
 import registerLottie from '../../assets/LottieAnimations/login (2).json'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import { TbFidgetSpinner } from "react-icons/tb";
+import useGlobal from "../../Hooks/useGlobal";
+import Swal from "sweetalert2";
 
 /* eslint-disable react/no-unescaped-entities */
 const RegisterPage = () => {
+    const [loading, setLoading] = useState(false);
     const [eye, setEye] = useState(false)
     const handleEye = () => {
         setEye(!eye)
     }
+    const { createAccount, logOutUser } = useGlobal();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -21,8 +26,31 @@ const RegisterPage = () => {
         formState: { errors },
     } = useForm()
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        try {
+            setLoading(true);
+            await createAccount(data?.email, data?.password);
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Account created successfully!",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            await logOutUser();
+            setLoading(false);
+            navigate('/login');
+        } catch (error) {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: error?.message,
+                showConfirmButton: false,
+                timer: 2500
+            });
+            setLoading(false);
+        }
+
     }
 
     return (
@@ -115,9 +143,10 @@ const RegisterPage = () => {
                 <div className="p-6 pt-0">
                     <button
                         type="submit"
-                        className="block w-full select-none rounded-lg bg-[#5547b2] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                        Sign up
+                        className="w-full select-none rounded-lg bg-[#5547b2] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none flex items-center justify-center gap-2">
+                        Sign up {loading && <TbFidgetSpinner className="text-white animate-spin font-bold" />}
                     </button>
+
                     <p className="flex justify-center mt-6 font-sans text-sm antialiased font-light leading-normal text-inherit">
                         Already have an account?
                         <Link to="/login"
