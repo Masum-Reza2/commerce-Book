@@ -9,6 +9,7 @@ import { useState } from "react";
 import { TbFidgetSpinner } from "react-icons/tb";
 import useGlobal from "../../Hooks/useGlobal";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 /* eslint-disable react/no-unescaped-entities */
 const RegisterPage = () => {
@@ -30,6 +31,13 @@ const RegisterPage = () => {
         try {
             setLoading(true);
             await createAccount(data?.email, data?.password);
+            // >>>>>>>>>>save user data into database<<<<<<<<<<<<
+            const userInfo = {
+                email: data?.email,
+                name: data?.name,
+                role: 'user'
+            }
+            // >>>>>>>>>>save user data into database<<<<<<<<<<<<
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -41,13 +49,7 @@ const RegisterPage = () => {
             setLoading(false);
             navigate('/login');
         } catch (error) {
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: error?.message,
-                showConfirmButton: false,
-                timer: 2500
-            });
+            toast.error(error?.message);
             setLoading(false);
         }
 
