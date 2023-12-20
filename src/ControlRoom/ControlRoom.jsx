@@ -74,10 +74,9 @@ const ControlRoom = ({ children }) => {
                         const token = res?.data?.token;
                         localStorage.setItem('token', token);
                     })
+            } else {
+                localStorage.removeItem('token');
             }
-            // else {
-            //     localStorage.removeItem('token');
-            // }
             setLoading(false);
         });
         return () => {

@@ -19,7 +19,7 @@ const RegisterPage = () => {
     const handleEye = () => {
         setEye(!eye)
     }
-    const { createAccount, logOutUser } = useGlobal();
+    const { createAccount, logOutUser, updateUserProfile } = useGlobal();
     const navigate = useNavigate();
     const publicAxios = usePublicAxios();
 
@@ -33,6 +33,7 @@ const RegisterPage = () => {
         try {
             setLoading(true);
             await createAccount(data?.email, data?.password);
+            await updateUserProfile(data?.name, '');
             // >>>>>>>>>>save user data into database<<<<<<<<<<<<
             const userInfo = {
                 email: data?.email,
