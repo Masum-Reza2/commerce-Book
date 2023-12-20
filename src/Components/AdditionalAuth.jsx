@@ -7,12 +7,14 @@ import useGlobal from "../Hooks/useGlobal";
 import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import usePublicAxios from "../Hooks/usePublicAxios";
 
 
 const AdditionalAuth = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
-    const { additionalLogin } = useGlobal();
+    const { additionalLogin, user } = useGlobal();
+    const publicAxios = usePublicAxios();
 
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
@@ -21,6 +23,12 @@ const AdditionalAuth = () => {
     const handleAdditional = async (provider) => {
         try {
             await additionalLogin(provider);
+            await publicAxios.post('/users', {
+                email: user?.email,
+                name: user?.displayName,
+                role: 'user',
+                promotionRequest: null,
+            });
             toast.success('Login successful');
             navigate(state || '/');
         } catch (error) {
