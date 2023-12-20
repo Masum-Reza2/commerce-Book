@@ -3,12 +3,13 @@ import { createContext, useEffect, useState } from "react"
 export const GlobalContext = createContext();
 import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
+import usePublicAxios from "../Hooks/usePublicAxios";
 
 
 const ControlRoom = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    const publicAxios = usePublicAxios();
 
     // >>>>>>firebase functions<<<<<<
 
@@ -67,13 +68,14 @@ const ControlRoom = ({ children }) => {
 
             console.log('current user is', currentUser);
             // // jwt activities here remember the setLoading
-            // if (currentUser) {
-            //     publicAxios.post(`/jwt`, { email: currentUser?.email || user?.email })
-            //         .then(res => {
-            //             const token = res?.data?.token;
-            //             localStorage.setItem('token', token);
-            //         })
-            // } else {
+            if (currentUser) {
+                publicAxios.post(`/jwt`, { email: currentUser?.email || user?.email })
+                    .then(res => {
+                        const token = res?.data?.token;
+                        localStorage.setItem('token', token);
+                    })
+            }
+            // else {
             //     localStorage.removeItem('token');
             // }
             setLoading(false);
