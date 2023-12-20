@@ -10,6 +10,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import useGlobal from "../../Hooks/useGlobal";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import usePublicAxios from "../../Hooks/usePublicAxios";
 
 /* eslint-disable react/no-unescaped-entities */
 const RegisterPage = () => {
@@ -20,6 +21,7 @@ const RegisterPage = () => {
     }
     const { createAccount, logOutUser } = useGlobal();
     const navigate = useNavigate();
+    const publicAxios = usePublicAxios();
 
     const {
         register,
@@ -35,8 +37,10 @@ const RegisterPage = () => {
             const userInfo = {
                 email: data?.email,
                 name: data?.name,
-                role: 'user'
+                role: 'user',
+                promotionRequest: null,
             }
+            await publicAxios.post('/users', userInfo);
             // >>>>>>>>>>save user data into database<<<<<<<<<<<<
             Swal.fire({
                 position: "center",
@@ -50,6 +54,7 @@ const RegisterPage = () => {
             navigate('/login');
         } catch (error) {
             toast.error(error?.message);
+            console.log(error)
             setLoading(false);
         }
 
