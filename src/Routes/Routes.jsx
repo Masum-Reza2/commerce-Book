@@ -6,6 +6,10 @@ import RegisterPage from "../Pages/RegisterPage/RegisterPage"
 import UserDashboard from "../Pages/Dashboards/UserDashboard/UserDashboard"
 import SellerDashboard from "../Pages/Dashboards/SellerDashboard/SellerDashboard"
 import AdminDashboard from "../Pages/Dashboards/AdminDashboard/AdminDashboard"
+import SellerHome from "../Pages/Dashboards/SellerDashboard/SellerHome"
+import AddProduct from "../Pages/Dashboards/SellerDashboard/AddProduct"
+import Home from "../Pages/Home/Home"
+import SellerRoute from "./SellerRoute"
 
 const Routes = createBrowserRouter([
     {
@@ -13,7 +17,7 @@ const Routes = createBrowserRouter([
         element: <Layout />,
         errorElement: <ErrorPage />,
         children: [
-
+            { path: '/', element: <Home /> }
         ]
     },
     // userDashboard
@@ -27,9 +31,10 @@ const Routes = createBrowserRouter([
     // sellerDashboard
     {
         path: '/sellerDashboard',
-        element: <SellerDashboard />,
+        element: <SellerRoute><SellerDashboard /></SellerRoute>,
         children: [
-
+            { index: true, element: <SellerHome /> },
+            { path: 'addProduct', element: <AddProduct /> },
         ]
     },
     // adminDashboard
