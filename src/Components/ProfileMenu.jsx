@@ -2,13 +2,16 @@
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material"
 import useGlobal from "../Hooks/useGlobal"
 import defaultProfile from '../assets/logos/defPro2.webp'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import useRole from "../Hooks/useRole";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const ProfileMenu = ({ handleOpenUserMenu, anchorElUser, handleCloseUserMenu }) => {
     const { user, logOutUser } = useGlobal();
     const navigate = useNavigate();
+    const { userRole, isPending } = useRole();
 
     const handleLogout = async () => {
         handleCloseUserMenu();
@@ -57,11 +60,13 @@ const ProfileMenu = ({ handleOpenUserMenu, anchorElUser, handleCloseUserMenu }) 
             >
                 {/* 1 */}
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{user?.DisplayName || 'UserName'}</Typography>
+                    <Typography textAlign="center">{user?.displayName || 'UserName'}</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Dashboard</Typography>
-                </MenuItem>
+                <Link to={(userRole?.role === 'user' && '/userDashboard') || (userRole?.role === 'seller' && '/sellerDashboard') || (userRole?.role === 'admin' && '/adminDashboard')}>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center" className="flex items-center justify-center">Dashboard {isPending && <TbFidgetSpinner className="text-black ml-2 mx-auto animate-spin font-bold" />}</Typography>
+                    </MenuItem>
+                </Link>
                 <MenuItem onClick={handleLogout}>
                     <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
