@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 const SellerHome = () => {
   return (
     <div>
-      <div className='w-full text-center'>
+      <div className='w-full text-center pt-5'>
         <Link to={'/sellerDashboard/addProduct'}>
           <Button variant="contained">
-            <AddBoxIcon /><span className='ml-2'>Add a Product</span>
+            <AddBoxIcon />
+            <span className='ml-2'>Add a Product</span>
           </Button>
         </Link>
       </div>

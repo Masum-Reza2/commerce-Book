@@ -80,7 +80,7 @@ export default function SellerDashboard() {
           </Drawer>
         </React.Fragment>
       ))}
-      <div>
+      <div className='bg-red-50 min-h-screen'>
         <Outlet />
       </div>
     </div>
