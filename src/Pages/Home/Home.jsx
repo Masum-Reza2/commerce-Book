@@ -35,7 +35,6 @@ const Home = () => {
             </div>
 
             <div className='col-span-3 border hidden md:block h-screen overflow-y-auto'>hello</div>
-
         </div>
     )
 }

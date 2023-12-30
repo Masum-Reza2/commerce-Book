@@ -15,6 +15,7 @@ import useSecureAxios from '../Hooks/useSecureAxios';
 import useGlobal from '../Hooks/useGlobal';
 import useProduct from '../Hooks/useProduct';
 import toast from 'react-hot-toast';
+import { TbFidgetSpinner } from 'react-icons/tb';
 
 const style = {
     position: 'absolute',
@@ -32,6 +33,7 @@ export default function TotalComments({ _id }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [loading, setLoading] = React.useState(false);
 
     const { product, refetch } = useProduct(_id);
     const comments = product?.comments || [];
@@ -53,6 +55,7 @@ export default function TotalComments({ _id }) {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
+                    setLoading(true)
                     await secureAxios.delete(`/deleteComments/${product?._id}?email=${user?.email}`)
                     await refetch();
                     Swal.fire({
@@ -62,15 +65,17 @@ export default function TotalComments({ _id }) {
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    setLoading(false)
                 } catch (error) {
                     toast.error(error?.message);
+                    setLoading(false)
                 }
             }
         });
     }
     return (
         <div>
-            <p onClick={handleOpen} className='ml-4 text-xs underline cursor-pointer'>Comments : {comments?.length}</p>
+            <p onClick={handleOpen} className='ml-4 text-xs underline cursor-pointer flex items-center gap-2'>Comments : {comments?.length}{loading && <TbFidgetSpinner className="animate-spin font-bold text-xs" />}</p>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
