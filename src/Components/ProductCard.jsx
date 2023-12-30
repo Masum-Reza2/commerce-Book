@@ -14,11 +14,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // icons
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import AddCommentIcon from '@mui/icons-material/AddComment';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import useSecureAxios from '../Hooks/useSecureAxios';
 import useGlobal from '../Hooks/useGlobal';
 import toast from 'react-hot-toast';
+import CommentModal from './CommentModal';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -75,62 +75,64 @@ export default function ProductCard({ product }) {
     }
 
     return (
-        <Card>
-            <CardHeader
-                avatar={
-                    <Avatar alt="Remy Sharp" src={ownerImg} />
-                }
-                title={name}
-                subheader={date}
-            />
-            {image &&
-                <CardMedia
-                    component="img"
-                    height="100"
-                    image={image}
-                    alt="Paella dish"
-                />}
-            <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    {description.slice(0, 100) + '...'}
-                </Typography>
-            </CardContent>
-            <p className='ml-4 text-xs'>Likes : {likeCount}</p>
-            <p className='ml-4 text-xs'>Comments : {commentCount}</p>
-            <CardActions disableSpacing>
-                <IconButton onClick={handleLike} aria-label="like">
-                    <ThumbUpIcon className={isLiked ? 'text-blue-600' : ''} />
-                </IconButton>
-                <IconButton aria-label="comment">
-                    <AddCommentIcon />
-                </IconButton>
-                <IconButton aria-label="add-to-cart">
-                    <AddShoppingCartIcon />
-                </IconButton>
-
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <>
+            <Card>
+                <CardHeader
+                    avatar={
+                        <Avatar alt="Remy Sharp" src={ownerImg} />
+                    }
+                    title={name}
+                    subheader={date}
+                />
+                {image &&
+                    <CardMedia
+                        component="img"
+                        height="100"
+                        image={image}
+                        alt="Paella dish"
+                    />}
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        Price : ${price}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Quantity : ${quantity}
-                    </Typography>
-
-                    <Typography variant="body2" color="text.secondary">
-                        <span className='underline'>Details</span> : {description}
+                        {description.slice(0, 100) + '...'}
                     </Typography>
                 </CardContent>
-            </Collapse>
-        </Card>
+                <p className='ml-4 text-xs'>Likes : {likeCount}</p>
+                <p className='ml-4 text-xs'>Comments : {commentCount}</p>
+                <CardActions disableSpacing>
+                    <IconButton onClick={handleLike} aria-label="like">
+                        <ThumbUpIcon className={isLiked ? 'text-blue-600' : ''} />
+                    </IconButton>
+                    <IconButton aria-label="comment">
+                        <CommentModal />
+                    </IconButton>
+                    <IconButton aria-label="add-to-cart">
+                        <AddShoppingCartIcon />
+                    </IconButton>
+
+                    <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        <ExpandMoreIcon />
+                    </ExpandMore>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography variant="body2" color="text.secondary">
+                            Price : ${price}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Quantity : ${quantity}
+                        </Typography>
+
+                        <Typography variant="body2" color="text.secondary">
+                            <span className='underline'>Details</span> : {description}
+                        </Typography>
+                    </CardContent>
+                </Collapse>
+            </Card>
+        </>
     );
 }

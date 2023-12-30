@@ -20,7 +20,6 @@ const Home = () => {
     if (isPending) return <SkeletonCom />
     return (
         <div className='grid py-5  grid-cols-12'>
-
             <div className='col-span-3 border hidden md:block h-screen overflow-y-auto'>lorem500</div>
 
             <div className="h-screen col-span-12 md:col-span-6 flex flex-col items-center overflow-y-auto">
