@@ -46,7 +46,7 @@ export default function TotalComments({ _id }) {
     const handleDeleteComments = async () => {
         handleClose()
         Swal.fire({
-            title: "Confirm delete your comments?",
+            title: "Delete comments?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -106,8 +106,8 @@ export default function TotalComments({ _id }) {
 
                         {isMyComment && <div className='flex items-center'>
                             <Typography className='text-sm font-semibold'>Delete your comments?</Typography>
-                            <IconButton onClick={handleClose}><CancelIcon /></IconButton>
-                            <IconButton onClick={handleDeleteComments}><CheckCircleIcon /></IconButton>
+                            <IconButton onClick={handleClose}><CancelIcon className='text-green-600' /></IconButton>
+                            <IconButton onClick={handleDeleteComments}><CheckCircleIcon className='text-red-600' /></IconButton>
                         </div>}
                     </Box>
                 </Fade>

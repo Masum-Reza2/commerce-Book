@@ -14,6 +14,8 @@ import useGlobal from '../Hooks/useGlobal';
 import toast from 'react-hot-toast';
 import { TbFidgetSpinner } from 'react-icons/tb';
 import useProduct from '../Hooks/useProduct';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -37,12 +39,29 @@ export default function CommentModal({ id, refetch }) {
     const { refetch: commentRefetch } = useProduct(id);
     const secureAxios = useSecureAxios();
     const { user } = useGlobal();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
         reset,
     } = useForm();
     const onSubmit = async (data) => {
+        if (!user) {
+            handleClose();
+            return Swal.fire({
+                title: "You are not logged in!",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Login now"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login')
+                }
+            });
+        }
+
         setLoading(true)
         const comment = {
             email: user?.email,
@@ -58,7 +77,7 @@ export default function CommentModal({ id, refetch }) {
             refetch();
             await commentRefetch();
             setLoading(false);
-            toast.success('You have commented successfully!')
+            toast.success('You post a comment.')
         } catch (error) {
             toast.error(error?.message);
             setLoading(false)

@@ -20,6 +20,8 @@ import useGlobal from '../Hooks/useGlobal';
 import toast from 'react-hot-toast';
 import CommentModal from './CommentModal';
 import TotalComments from './TotalComments';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -40,6 +42,7 @@ export default function ProductCard({ product, refetch }) {
     const [likeCount, setLikeCount] = React.useState(likes?.length || 0);
     const secureAxios = useSecureAxios();
     const { user } = useGlobal();
+    const navigate = useNavigate();
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -54,6 +57,20 @@ export default function ProductCard({ product, refetch }) {
 
 
     const handleLike = async () => {
+        if (!user) {
+            return Swal.fire({
+                title: "You are not logged in!",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Login now"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login')
+                }
+            });
+        }
         if (!isLiked) {
             try {
                 secureAxios.put(`/like/${_id}?email=${user?.email}`);
@@ -96,13 +113,17 @@ export default function ProductCard({ product, refetch }) {
                     </Typography>
                 </CardContent>
                 <p className='ml-4 text-xs'>Likes : {likeCount}</p>
+                {/* All comments */}
                 <TotalComments _id={_id} />
                 <CardActions disableSpacing>
                     <IconButton onClick={handleLike} aria-label="like">
+                        {/* like functionality */}
                         <ThumbUpIcon className={isLiked ? 'text-blue-600' : ''} />
                     </IconButton>
+                    {/* Add comment */}
                     <CommentModal id={_id} refetch={refetch} />
                     <IconButton aria-label="add-to-cart">
+                        {/* Cart functionality */}
                         <AddShoppingCartIcon />
                     </IconButton>
 
