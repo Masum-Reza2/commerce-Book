@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -7,6 +8,11 @@ import Typography from '@mui/material/Typography';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import { Button, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import { useForm } from 'react-hook-form';
+import useSecureAxios from '../Hooks/useSecureAxios';
+import useGlobal from '../Hooks/useGlobal';
+import toast from 'react-hot-toast';
+import { TbFidgetSpinner } from 'react-icons/tb';
 
 const style = {
     position: 'absolute',
@@ -21,11 +27,38 @@ const style = {
     p: 4,
 };
 
-export default function CommentModal() {
+export default function CommentModal({ id, refetch, setCommentCount, commentCount }) {
+    const [loading, setLoading] = React.useState(false)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    const secureAxios = useSecureAxios();
+    const { user } = useGlobal();
+    const {
+        register,
+        handleSubmit,
+        reset,
+    } = useForm();
+    const onSubmit = async (data) => {
+        setLoading(true)
+        const comment = {
+            date: new Date().toLocaleString(),
+            text: data?.comment,
+            name: user?.displayName,
+            img: user?.photoURL || null,
+        }
+        try {
+            await secureAxios.put(`/comment/${id}`, comment)
+            handleClose();
+            reset();
+            refetch();
+            setCommentCount(commentCount + 1)
+            setLoading(false)
+        } catch (error) {
+            toast.error(error?.message);
+            setLoading(false)
+        }
+    }
     return (
         <div className=''>
             <AddCommentIcon onClick={handleOpen} />
@@ -47,15 +80,20 @@ export default function CommentModal() {
                         <Typography id="transition-modal-title" variant="h6" component="h2">
                             Your Comment
                         </Typography>
-                        <TextField
-                            required
-                            className='w-full'
-                            id="outlined-multiline-static"
-                            label="Type here"
-                            multiline
-                            rows={4}
-                        />
-                        <Button variant="outlined" className='flex items-center justify-center w-full'><SendIcon /></Button>
+                        <form className='space-y-2' onSubmit={handleSubmit(onSubmit)}>
+                            <TextField
+                                {...register("comment")}
+                                required
+                                className='w-full'
+                                id="outlined-multiline-static"
+                                label="Type here"
+                                multiline
+                                rows={4}
+                            />
+                            <Button type='submit' variant="outlined" className='flex items-center justify-center w-full'>
+                                {loading ? <TbFidgetSpinner className="animate-spin text-xl font-bold" /> : <SendIcon />}
+                            </Button>
+                        </form>
                     </Box>
                 </Fade>
             </Modal>

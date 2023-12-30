@@ -15,7 +15,7 @@ const Home = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const { products, isPending } = useProducts(page, 10, searchText);
+    const { products, isPending, refetch } = useProducts(page, 10, searchText);
 
     if (isPending) return <SkeletonCom />
     return (
@@ -25,7 +25,7 @@ const Home = () => {
             <div className="h-screen col-span-12 md:col-span-6 flex flex-col items-center overflow-y-auto">
                 <div className="grid grid-cols-1 gap-5 px-2 md:px-4">
                     {
-                        products?.map(product => <ProductCard product={product} key={product?._id} />)
+                        products?.map(product => <ProductCard product={product} key={product?._id} refetch={refetch} />)
                     }
                     {!products?.length && <h1 className="font-bold text-xl">No products found for <span className="italic">{`'${searchText}'`}</span></h1>}
                 </div>

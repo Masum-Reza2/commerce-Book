@@ -31,7 +31,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, refetch }) {
     const [expanded, setExpanded] = React.useState(false);
     const [isLiked, setIsLiked] = React.useState(false);
     const { _id, ownerName, ownerEmail, name, description, quantity, image, likes, price, comments, ownerImg, date } = product;
@@ -103,7 +103,7 @@ export default function ProductCard({ product }) {
                         <ThumbUpIcon className={isLiked ? 'text-blue-600' : ''} />
                     </IconButton>
                     <IconButton aria-label="comment">
-                        <CommentModal />
+                        <CommentModal id={_id} refetch={refetch} setCommentCount={setCommentCount} commentCount={commentCount} />
                     </IconButton>
                     <IconButton aria-label="add-to-cart">
                         <AddShoppingCartIcon />
