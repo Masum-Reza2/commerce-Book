@@ -35,11 +35,9 @@ const ExpandMore = styled((props) => {
 export default function ProductCard({ product, refetch }) {
     const [expanded, setExpanded] = React.useState(false);
     const [isLiked, setIsLiked] = React.useState(false);
-    const { _id, ownerName, ownerEmail, name, description, quantity, image, likes, price, comments, ownerImg, date } = product;
+    const { _id, name, description, quantity, image, likes, price, ownerImg, date } = product;
 
     const [likeCount, setLikeCount] = React.useState(likes?.length || 0);
-    const [commentCount, setCommentCount] = React.useState(comments?.length || 0);
-
     const secureAxios = useSecureAxios();
     const { user } = useGlobal();
 
@@ -98,12 +96,12 @@ export default function ProductCard({ product, refetch }) {
                     </Typography>
                 </CardContent>
                 <p className='ml-4 text-xs'>Likes : {likeCount}</p>
-                <TotalComments commentCount={commentCount} product={product} />
+                <TotalComments _id={_id} />
                 <CardActions disableSpacing>
                     <IconButton onClick={handleLike} aria-label="like">
                         <ThumbUpIcon className={isLiked ? 'text-blue-600' : ''} />
                     </IconButton>
-                    <CommentModal id={_id} refetch={refetch} setCommentCount={setCommentCount} commentCount={commentCount} />
+                    <CommentModal id={_id} refetch={refetch} />
                     <IconButton aria-label="add-to-cart">
                         <AddShoppingCartIcon />
                     </IconButton>

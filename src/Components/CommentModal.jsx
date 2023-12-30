@@ -13,6 +13,7 @@ import useSecureAxios from '../Hooks/useSecureAxios';
 import useGlobal from '../Hooks/useGlobal';
 import toast from 'react-hot-toast';
 import { TbFidgetSpinner } from 'react-icons/tb';
+import useProduct from '../Hooks/useProduct';
 
 const style = {
     position: 'absolute',
@@ -27,11 +28,13 @@ const style = {
     p: 4,
 };
 
-export default function CommentModal({ id, refetch, setCommentCount, commentCount }) {
+export default function CommentModal({ id, refetch }) {
     const [loading, setLoading] = React.useState(false)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const { refetch: commentRefetch } = useProduct(id);
     const secureAxios = useSecureAxios();
     const { user } = useGlobal();
     const {
@@ -53,9 +56,9 @@ export default function CommentModal({ id, refetch, setCommentCount, commentCoun
             handleClose();
             reset();
             refetch();
-            setCommentCount(commentCount + 1);
+            await commentRefetch();
             setLoading(false);
-            await toast.success('You have commented successfully!')
+            toast.success('You have commented successfully!')
         } catch (error) {
             toast.error(error?.message);
             setLoading(false)
