@@ -28,6 +28,7 @@ const Home = () => {
                     {
                         products?.map(product => <ProductCard product={product} key={product?._id} />)
                     }
+                    {!products?.length && <h1 className="font-bold text-xl">No products found for <span className="italic">{`'${searchText}'`}</span></h1>}
                 </div>
                 <Stack className="pt-5" spacing={2} >
                     <Pagination count={Math.ceil(totalProduct / 10)} page={page} onChange={handleChange} color="secondary" />

@@ -9,7 +9,8 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useSecureAxios from "../../../Hooks/useSecureAxios";
 import { useNavigate } from "react-router-dom";
-
+import { TbFidgetSpinner } from "react-icons/tb";
+import { useState } from "react";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -23,6 +24,7 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 const AddProduct = () => {
+    const [loading, setLoading] = useState(false);
     const { user } = useGlobal();
     const secureAxios = useSecureAxios();
     const navigate = useNavigate();
@@ -32,6 +34,7 @@ const AddProduct = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
+        setLoading(true)
         Swal.fire({
             title: "Confirm add product?",
             icon: "warning",
@@ -51,12 +54,14 @@ const AddProduct = () => {
                         date: new Date().toLocaleString(),
                         name: data?.name,
                         description: data?.description,
+                        price: Number.parseFloat(data?.price),
                         quantity: Number.parseFloat(data?.quantity),
                         image: imageUrl || null,
-                        likeCount: 0,
+                        likes: [],
                         comments: []
                     }
                     await secureAxios.post(`/products`, product);
+                    setLoading(false);
                     await Swal.fire({
                         position: "center",
                         icon: "success",
@@ -67,8 +72,10 @@ const AddProduct = () => {
                     navigate('/sellerDashboard')
                 } catch (error) {
                     toast.error(error?.message);
+                    setLoading(false)
                 }
             } else {
+                setLoading(false)
                 Swal.fire({
                     position: "center",
                     icon: "info",
@@ -104,6 +111,17 @@ const AddProduct = () => {
                     rows={6}
                 />
                 <TextField
+                    {...register("price")}
+                    required
+                    className='w-full'
+                    id="outlined-number"
+                    label="Price"
+                    type="number"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+                <TextField
                     {...register("quantity")}
                     required
                     className='w-full'
@@ -122,7 +140,7 @@ const AddProduct = () => {
                 </div>
 
                 <div>
-                    <button type="submit" className='border px-3 py-1 rounded-md text-base font-bold bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-600 transition-all active:outline-none hover:-translate-y-[0.10rem] active:translate-y-[0.10rem]'>Post <SendIcon /></button>
+                    <button type="submit" className='border px-3 py-1 rounded-md text-base font-bold bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-600 transition-all active:outline-none hover:-translate-y-[0.10rem] active:translate-y-[0.10rem] flex items-center gap-2'>Post {loading ? <TbFidgetSpinner className="text-white animate-spin font-bold" /> : <SendIcon />}</button>
                 </div>
             </form>
         </div>
