@@ -91,7 +91,7 @@ export default function TotalComments({ _id }) {
             >
                 <Fade in={open}>
                     <Box className='max-w-xs md:max-w-full space-y-2 overflow-y-scroll max-h-[26rem] outline-none' sx={style}>
-                        <Typography className='text-center' id="transition-modal-title" variant="h6" component="h2">
+                        <Typography className='text-center relative' id="transition-modal-title" variant="h6" component="h2">
                             {comments?.length ? 'Comments' : 'No comments'}
                         </Typography>
                         {
@@ -104,11 +104,16 @@ export default function TotalComments({ _id }) {
                             </div>)
                         }
 
-                        {isMyComment && <div className='flex items-center'>
+                        {isMyComment ? <div className='flex items-center'>
                             <Typography className='text-sm font-semibold'>Delete your comments?</Typography>
                             <IconButton onClick={handleClose}><CancelIcon className='text-green-600' /></IconButton>
                             <IconButton onClick={handleDeleteComments}><CheckCircleIcon className='text-red-600' /></IconButton>
-                        </div>}
+                        </div>
+                            :
+                            <div className='flex items-center justify-center'>
+                                <IconButton onClick={handleClose}><CancelIcon className='text-green-600' /></IconButton>
+                            </div>
+                        }
                     </Box>
                 </Fade>
             </Modal>
