@@ -6,7 +6,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import AddCommentIcon from '@mui/icons-material/AddComment';
-import { Button, TextField } from '@mui/material';
+import { Button, IconButton, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useForm } from 'react-hook-form';
 import useSecureAxios from '../Hooks/useSecureAxios';
@@ -42,6 +42,7 @@ export default function CommentModal({ id, refetch, setCommentCount, commentCoun
     const onSubmit = async (data) => {
         setLoading(true)
         const comment = {
+            email: user?.email,
             date: new Date().toLocaleString(),
             text: data?.comment,
             name: user?.displayName,
@@ -52,8 +53,9 @@ export default function CommentModal({ id, refetch, setCommentCount, commentCoun
             handleClose();
             reset();
             refetch();
-            setCommentCount(commentCount + 1)
-            setLoading(false)
+            setCommentCount(commentCount + 1);
+            setLoading(false);
+            await toast.success('You have commented successfully!')
         } catch (error) {
             toast.error(error?.message);
             setLoading(false)
@@ -61,7 +63,9 @@ export default function CommentModal({ id, refetch, setCommentCount, commentCoun
     }
     return (
         <div className=''>
-            <AddCommentIcon onClick={handleOpen} />
+            <IconButton onClick={handleOpen} aria-label="comment">
+                <AddCommentIcon />
+            </IconButton>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"

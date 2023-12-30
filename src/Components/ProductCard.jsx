@@ -19,6 +19,7 @@ import useSecureAxios from '../Hooks/useSecureAxios';
 import useGlobal from '../Hooks/useGlobal';
 import toast from 'react-hot-toast';
 import CommentModal from './CommentModal';
+import TotalComments from './TotalComments';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -97,14 +98,12 @@ export default function ProductCard({ product, refetch }) {
                     </Typography>
                 </CardContent>
                 <p className='ml-4 text-xs'>Likes : {likeCount}</p>
-                <p className='ml-4 text-xs'>Comments : {commentCount}</p>
+                <TotalComments commentCount={commentCount} product={product} />
                 <CardActions disableSpacing>
                     <IconButton onClick={handleLike} aria-label="like">
                         <ThumbUpIcon className={isLiked ? 'text-blue-600' : ''} />
                     </IconButton>
-                    <IconButton aria-label="comment">
-                        <CommentModal id={_id} refetch={refetch} setCommentCount={setCommentCount} commentCount={commentCount} />
-                    </IconButton>
+                    <CommentModal id={_id} refetch={refetch} setCommentCount={setCommentCount} commentCount={commentCount} />
                     <IconButton aria-label="add-to-cart">
                         <AddShoppingCartIcon />
                     </IconButton>
