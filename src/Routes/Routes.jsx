@@ -10,6 +10,8 @@ import SellerHome from "../Pages/Dashboards/SellerDashboard/SellerHome"
 import AddProduct from "../Pages/Dashboards/SellerDashboard/AddProduct"
 import Home from "../Pages/Home/Home"
 import SellerRoute from "./SellerRoute"
+import AdminRoute from "./AdminRoute"
+import UserRoute from "./UserRoute"
 
 const Routes = createBrowserRouter([
     {
@@ -23,7 +25,7 @@ const Routes = createBrowserRouter([
     // userDashboard
     {
         path: '/userDashboard',
-        element: <UserDashboard />,
+        element: <UserRoute><UserDashboard /></UserRoute>,
         children: [
 
         ]
@@ -40,7 +42,7 @@ const Routes = createBrowserRouter([
     // adminDashboard
     {
         path: '/adminDashboard',
-        element: <AdminDashboard />,
+        element: <AdminRoute><AdminDashboard /></AdminRoute>,
         children: [
 
         ]

@@ -13,13 +13,7 @@ const uploadImage = async (image) => {
     );
     return data?.data?.display_url || undefined;
   } catch (error) {
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: `Oops Something went wrong!`,
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    console.log(error, 'image url missing.')
   }
 };
 

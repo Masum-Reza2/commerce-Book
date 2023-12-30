@@ -11,7 +11,7 @@ const AdminRoute = ({ children }) => {
     const { user, loading } = useGlobal();
     if (loading || isPending) return <Spinner />
     if (user && userRole?.role === 'admin') return children
-    return <Navigate to={'/login'} state={pathname}></Navigate>
+    return <Navigate to={'/'} state={pathname}></Navigate>
 }
 
 export default AdminRoute

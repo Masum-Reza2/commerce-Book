@@ -60,7 +60,7 @@ const ProfileMenu = ({ handleOpenUserMenu, anchorElUser, handleCloseUserMenu }) 
             >
                 {/* 1 */}
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{user?.displayName || 'UserName'}</Typography>
+                    <Typography className="capitalize" textAlign="center">{user?.displayName || 'UserName'}</Typography>
                 </MenuItem>
                 <Link to={(userRole?.role === 'user' && '/userDashboard') || (userRole?.role === 'seller' && '/sellerDashboard') || (userRole?.role === 'admin' && '/adminDashboard')}>
                     <MenuItem onClick={handleCloseUserMenu}>

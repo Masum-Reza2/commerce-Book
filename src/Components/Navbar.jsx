@@ -13,10 +13,12 @@ import { NavLink } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import './navbar.css'
 import ProfileMenu from './ProfileMenu';
+import useGlobal from '../Hooks/useGlobal';
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const { searchText, setSearchText } = useGlobal();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -121,7 +123,7 @@ function Navbar() {
                     </Box>
                     {/* search box */}
                     <div className='items-center justify-center hidden md:flex relative'>
-                        <input type="text" placeholder="Search Commerce-Book" className="input input-bordered md:px-5 mr-5 p-2 rounded-md text-black focus:outline-none" />
+                        <input value={searchText} onChange={(e) => setSearchText(e.target.value)} type="text" placeholder="Search Commerce-Book" className="input input-bordered md:px-5 mr-5 p-2 rounded-md text-black focus:outline-none" />
                     </div>
 
                     {/* profile */}

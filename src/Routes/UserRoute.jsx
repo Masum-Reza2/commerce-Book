@@ -5,7 +5,7 @@ import useRole from "../Hooks/useRole";
 import useGlobal from "../Hooks/useGlobal";
 import Spinner from "../Components/Spinner";
 
-const AdminRoute = ({ children }) => {
+const UserRoute = ({ children }) => {
     const { userRole, isPending } = useRole();
     const { pathname } = useLocation();
     const { user, loading } = useGlobal();
@@ -14,4 +14,5 @@ const AdminRoute = ({ children }) => {
     return <Navigate to={'/login'} state={pathname}></Navigate>
 }
 
-export default AdminRoute
+
+export default UserRoute

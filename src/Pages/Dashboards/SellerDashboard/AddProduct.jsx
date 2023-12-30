@@ -8,6 +8,7 @@ import useGlobal from "../../../Hooks/useGlobal";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useSecureAxios from "../../../Hooks/useSecureAxios";
+import { useNavigate } from "react-router-dom";
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -24,6 +25,7 @@ const VisuallyHiddenInput = styled('input')({
 const AddProduct = () => {
     const { user } = useGlobal();
     const secureAxios = useSecureAxios();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -45,6 +47,8 @@ const AddProduct = () => {
                     const product = {
                         ownerName: user?.displayName,
                         ownerEmail: user?.email,
+                        ownerImg: user?.photoURL,
+                        date: new Date().toLocaleString(),
                         name: data?.name,
                         description: data?.description,
                         quantity: Number.parseFloat(data?.quantity),
@@ -60,6 +64,7 @@ const AddProduct = () => {
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    navigate('/sellerDashboard')
                 } catch (error) {
                     toast.error(error?.message);
                 }

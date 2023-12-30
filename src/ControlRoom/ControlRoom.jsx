@@ -9,6 +9,7 @@ import usePublicAxios from "../Hooks/usePublicAxios";
 const ControlRoom = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [searchText, setSearchText] = useState('');
     const publicAxios = usePublicAxios();
 
     // >>>>>>firebase functions<<<<<<
@@ -98,7 +99,9 @@ const ControlRoom = ({ children }) => {
         updateUserEmail,
         updateUserPassword,
         deleteHimOrHer,
-        additionalLogin
+        additionalLogin,
+        searchText,
+        setSearchText
     }
     return (
         <GlobalContext.Provider value={globalInfo}>
