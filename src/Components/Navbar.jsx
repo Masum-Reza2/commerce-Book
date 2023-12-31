@@ -25,8 +25,13 @@ function Navbar() {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const { searchText, setSearchText } = useGlobal();
     const { userRole } = useRole();
+    const { user } = useGlobal();
     const role = userRole?.role;
-    const { cartNumber } = useCartNumber()
+    const { cartNumber, refetch } = useCartNumber()
+
+    React.useEffect(() => {
+        refetch()
+    }, [user, refetch])
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -60,7 +65,7 @@ function Navbar() {
             <NavLink to={(role === 'user' && '/userDashboard/cart') || (role === 'seller' && '/sellerDashboard/cart') || (role === 'admin' && '/adminDashboard/cart')} className='text-white hover:bg-gray-500 bg-gray-500 lg:bg-transparent p-3 hover:border-b-[5px] rounded-[10%] hover:border-black'>
                 <ShoppingCartIcon />
             </NavLink>
-            <Typography className='text-white font-bold absolute top-0 right-2 lg:right-2'>{cartNumber?.cartCount || 0}</Typography>
+            <Typography className='text-white font-bold absolute top-0 right-2 lg:right-2'>{cartNumber?.cartCount}</Typography>
         </Button>
     </div>
 

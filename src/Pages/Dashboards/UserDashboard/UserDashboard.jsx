@@ -49,7 +49,7 @@ export default function UserDashboard() {
               <ListItemIcon>
                 <ShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary={`My Carts (${cartNumber?.cartCount || 0})`} />
+              <ListItemText primary={`My Cart (${cartNumber?.cartCount || 0})`} />
             </ListItemButton>
           </ListItem>
         </NavLink>

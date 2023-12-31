@@ -132,7 +132,6 @@ export default function ProductCard({ product, refetch }) {
         } catch (error) {
             toast.error(error?.message);
         }
-        // await secureAxios.delete(`/removeFromCart`, { productId: _id });
     }
     return (
         <>
@@ -153,7 +152,7 @@ export default function ProductCard({ product, refetch }) {
                     />}
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        {description.slice(0, 100) + '...'}
+                        {description.slice(0, 150) + '...'}
                     </Typography>
                 </CardContent>
                 <p className='ml-4 text-xs'>Likes : {likeCount}</p>
