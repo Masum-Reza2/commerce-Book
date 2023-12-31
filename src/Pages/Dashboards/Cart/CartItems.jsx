@@ -15,7 +15,12 @@ import Spinner from '../../../Components/Spinner';
 
 // icons
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { Divider } from '@mui/material';
+import { Button, Divider } from '@mui/material';
+import Swal from 'sweetalert2';
+import useSecureAxios from '../../../Hooks/useSecureAxios';
+import useCartNumber from '../../../Hooks/useCartNumber';
+import useProducts from '../../../Hooks/useProducts';
+import useProduct from '../../../Hooks/useProduct';
 
 
 const Demo = styled('div')(({ theme }) => ({
@@ -26,10 +31,39 @@ export default function CartItems() {
     const [secondary, setSecondary] = React.useState(false);
     const { carts, refetch, isPending } = useCarts();
     const totalPrice = carts?.reduce((prev, curr) => prev + curr.price, 0)
+    const secureAxios = useSecureAxios();
+    const { refetch: cartNumberRefetch } = useCartNumber();
+    const { refetch: productsRefetch } = useProducts();
+    const { refetch: productRefetch } = useProduct();
 
+    const handleRemoveCart = (cartId, productId) => {
+        Swal.fire({
+            title: "Confirm delete?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Delete"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await secureAxios.delete(`/removeCart?cartId=${cartId}&productId=${productId}`)
+                await refetch();
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Deleted.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                await cartNumberRefetch();
+                await productsRefetch();
+                await productRefetch();
+            }
+        });
+    }
     if (isPending) return <Spinner />
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box className='my-5 md:my-0 max-h-screen overflow-y-auto' sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={12}>
                     <Typography className='text-center' sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
@@ -40,7 +74,7 @@ export default function CartItems() {
                             {carts?.map((cart, index) => {
                                 return <ListItem key={cart?._id}
                                     secondaryAction={
-                                        <IconButton edge="end" aria-label="delete">
+                                        <IconButton onClick={() => handleRemoveCart(cart?._id, cart?.productId)} edge="end" aria-label="delete">
                                             <DeleteIcon />
                                         </IconButton>
                                     }
@@ -51,13 +85,13 @@ export default function CartItems() {
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={`${index + 1}. ${cart?.name}`}
+                                        primary={`${index + 1}. ${cart?.name} ($${cart?.price})`}
                                         secondary={secondary ? 'Secondary text' : null}
                                     />
-                                    <ListItemText
+                                    {/* <ListItemText
                                         primary={`$${cart?.price}`}
                                         secondary={secondary ? 'Secondary text' : null}
-                                    />
+                                    /> */}
                                 </ListItem>
                             })
                             }
@@ -70,6 +104,9 @@ export default function CartItems() {
             <br />
             <Divider variant="middle" />
             <Typography className='text-center pb-5 md:pb-0 font-bold' variant='h6'>Total Price : ${totalPrice}</Typography>
+            <div className='text-center'>
+                <Button variant="contained">Place-Order</Button>
+            </div>
         </Box>
     );
 }
