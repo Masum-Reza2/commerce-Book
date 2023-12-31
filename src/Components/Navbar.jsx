@@ -10,15 +10,23 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { NavLink } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
 import './navbar.css'
 import ProfileMenu from './ProfileMenu';
 import useGlobal from '../Hooks/useGlobal';
+
+// icons
+import HomeIcon from '@mui/icons-material/Home';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import useRole from '../Hooks/useRole';
+import useCartNumber from '../Hooks/useCartNumber';
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const { searchText, setSearchText } = useGlobal();
+    const { userRole } = useRole();
+    const role = userRole?.role;
+    const { cartNumber } = useCartNumber()
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -43,6 +51,16 @@ function Navbar() {
             <NavLink to={'/'} className='text-white hover:bg-gray-500 p-3'>
                 <HomeIcon />
             </NavLink>
+        </Button>
+        <Button
+            className='relative'
+            onClick={handleCloseNavMenu}
+            sx={{ my: 2, display: 'block' }}
+        >
+            <NavLink to={(role === 'user' && '/userDashboard/cart') || (role === 'seller' && '/sellerDashboard/cart') || (role === 'admin' && '/adminDashboard/cart')} className='text-white hover:bg-gray-500 bg-gray-500 lg:bg-transparent p-3 hover:border-b-[5px] rounded-[10%] hover:border-black'>
+                <ShoppingCartIcon />
+            </NavLink>
+            <Typography className='text-white font-bold absolute top-0 right-2 lg:right-2'>{cartNumber?.cartCount || 0}</Typography>
         </Button>
     </div>
 

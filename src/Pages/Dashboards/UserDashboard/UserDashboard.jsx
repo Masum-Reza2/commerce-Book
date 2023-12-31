@@ -13,7 +13,8 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 // icons
 import ListIcon from '@mui/icons-material/List';
 import HomeIcon from '@mui/icons-material/Home';
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import useCartNumber from '../../../Hooks/useCartNumber';
 
 export default function UserDashboard() {
   const [state, setState] = React.useState({
@@ -31,6 +32,8 @@ export default function UserDashboard() {
     setState({ ...state, [anchor]: open });
   };
 
+  const { cartNumber } = useCartNumber();
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -40,13 +43,13 @@ export default function UserDashboard() {
     >
       <List>
 
-        <NavLink className='bg-red-500' to={'/sellerDashboard/addProduct'}>
+        <NavLink className='bg-red-500' to={'/userDashboard/cart'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <AddBoxIcon />
+                <ShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary={'Add Product'} />
+              <ListItemText primary={`My Carts (${cartNumber?.cartCount || 0})`} />
             </ListItemButton>
           </ListItem>
         </NavLink>

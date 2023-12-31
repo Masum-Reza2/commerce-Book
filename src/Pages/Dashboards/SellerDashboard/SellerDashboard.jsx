@@ -14,6 +14,8 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import ListIcon from '@mui/icons-material/List';
 import HomeIcon from '@mui/icons-material/Home';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import useCartNumber from '../../../Hooks/useCartNumber';
 
 export default function SellerDashboard() {
   const [state, setState] = React.useState({
@@ -30,7 +32,7 @@ export default function SellerDashboard() {
 
     setState({ ...state, [anchor]: open });
   };
-
+  const { cartNumber } = useCartNumber();
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -40,13 +42,24 @@ export default function SellerDashboard() {
     >
       <List>
 
-        <NavLink className='bg-red-500' to={'/sellerDashboard/addProduct'}>
+        <NavLink to={'/sellerDashboard/addProduct'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <AddBoxIcon />
               </ListItemIcon>
               <ListItemText primary={'Add Product'} />
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
+
+        <NavLink to={'/sellerDashboard/cart'}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ShoppingCartIcon />
+              </ListItemIcon>
+              <ListItemText primary={`My cart (${cartNumber?.cartCount || 0})`} />
             </ListItemButton>
           </ListItem>
         </NavLink>

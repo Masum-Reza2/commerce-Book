@@ -22,6 +22,7 @@ import CommentModal from './CommentModal';
 import TotalComments from './TotalComments';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import useCartNumber from '../Hooks/useCartNumber';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -39,10 +40,13 @@ export default function ProductCard({ product, refetch }) {
     const [isLiked, setIsLiked] = React.useState(false);
     const { _id, name, description, quantity, image, likes, price, ownerImg, date } = product;
 
+    const [qty, setQty] = React.useState(quantity || 0)
     const [likeCount, setLikeCount] = React.useState(likes?.length || 0);
+
     const secureAxios = useSecureAxios();
     const { user } = useGlobal();
     const navigate = useNavigate();
+    const { refetch: cartNumberRefetch } = useCartNumber();
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -90,6 +94,46 @@ export default function ProductCard({ product, refetch }) {
         }
     }
 
+    const handleCart = async () => {
+        if (!user) {
+            return Swal.fire({
+                title: "You are not logged in!",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Login now"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login')
+                }
+            });
+        }
+        if (qty < 1) {
+            return Swal.fire({
+                position: "center",
+                icon: "info",
+                title: "Out of Stock!",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        try {
+            const cartProduct = {
+                name,
+                productId: _id,
+                email: user?.email,
+                price,
+                date: new Date().toLocaleString(),
+            }
+            await secureAxios.put(`/addTocart`, cartProduct);
+            await cartNumberRefetch();
+            setQty(qty - 1);
+        } catch (error) {
+            toast.error(error?.message);
+        }
+        // await secureAxios.delete(`/removeFromCart`, { productId: _id });
+    }
     return (
         <>
             <Card>
@@ -122,7 +166,7 @@ export default function ProductCard({ product, refetch }) {
                     </IconButton>
                     {/* Add comment */}
                     <CommentModal id={_id} refetch={refetch} />
-                    <IconButton aria-label="add-to-cart">
+                    <IconButton onClick={handleCart} aria-label="add-to-cart">
                         {/* Cart functionality */}
                         <AddShoppingCartIcon />
                     </IconButton>
@@ -142,7 +186,7 @@ export default function ProductCard({ product, refetch }) {
                             Price : ${price}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Quantity : ${quantity}
+                            Quantity : {qty}
                         </Typography>
 
                         <Typography variant="body2" color="text.secondary">
