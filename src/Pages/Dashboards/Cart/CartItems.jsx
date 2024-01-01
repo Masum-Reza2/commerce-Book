@@ -21,6 +21,7 @@ import useSecureAxios from '../../../Hooks/useSecureAxios';
 import useCartNumber from '../../../Hooks/useCartNumber';
 import useProducts from '../../../Hooks/useProducts';
 import useProduct from '../../../Hooks/useProduct';
+import { Link } from 'react-router-dom';
 
 
 const Demo = styled('div')(({ theme }) => ({
@@ -88,10 +89,6 @@ export default function CartItems() {
                                         primary={`${index + 1}. ${cart?.name} ($${cart?.price})`}
                                         secondary={secondary ? 'Secondary text' : null}
                                     />
-                                    {/* <ListItemText
-                                        primary={`$${cart?.price}`}
-                                        secondary={secondary ? 'Secondary text' : null}
-                                    /> */}
                                 </ListItem>
                             })
                             }
@@ -105,7 +102,9 @@ export default function CartItems() {
             <Divider variant="middle" />
             <Typography className='text-center pb-5 md:pb-0 font-bold' variant='h6'>Total Price : ${totalPrice}</Typography>
             <div className='text-center'>
-                <Button variant="contained">Place-Order</Button>
+                <Link to={'/userDashboard/payment'}>
+                    <Button variant="contained">Place-Order</Button>
+                </Link>
             </div>
         </Box>
     );

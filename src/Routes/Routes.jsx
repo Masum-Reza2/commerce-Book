@@ -13,6 +13,7 @@ import SellerRoute from "./SellerRoute"
 import AdminRoute from "./AdminRoute"
 import UserRoute from "./UserRoute"
 import Cart from "../Pages/Dashboards/Cart/Cart"
+import Payment from "../Pages/Dashboards/Payments/Payment"
 
 const Routes = createBrowserRouter([
     {
@@ -29,6 +30,7 @@ const Routes = createBrowserRouter([
         element: <UserRoute><UserDashboard /></UserRoute>,
         children: [
             { path: 'cart', element: <Cart /> },
+            { path: 'payment', element: <Payment /> },
         ]
     },
     // sellerDashboard
@@ -39,6 +41,7 @@ const Routes = createBrowserRouter([
             { index: true, element: <SellerHome /> },
             { path: 'addProduct', element: <AddProduct /> },
             { path: 'cart', element: <Cart /> },
+            { path: 'payment', element: <Payment /> },
         ]
     },
     // adminDashboard
@@ -47,6 +50,7 @@ const Routes = createBrowserRouter([
         element: <AdminRoute><AdminDashboard /></AdminRoute>,
         children: [
             { path: 'cart', element: <Cart /> },
+            { path: 'payment', element: <Payment /> },
         ]
     },
     { path: '/register', element: <RegisterPage /> },
