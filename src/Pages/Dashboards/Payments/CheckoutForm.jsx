@@ -8,6 +8,7 @@ import useCarts from "../../../Hooks/useCarts";
 import Swal from "sweetalert2";
 import { AiOutlineLoading } from "react-icons/ai";
 import { Button } from "@mui/material";
+import toast from "react-hot-toast";
 
 const CheckoutForm = () => {
     const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ const CheckoutForm = () => {
     const elements = useElements();
 
     // >>>>>>>>>>>>>>>>>>getting the client secret from stripe docs
-    const { carts } = useCarts();
+    const { carts, refetch } = useCarts();
     const price = carts?.reduce((prev, curr) => prev + curr.price, 0);
     const [clientSecret, setClientSecret] = useState('');
     const secureAxios = useSecureAxios();
@@ -40,7 +41,7 @@ const CheckoutForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         Swal.fire({
-            title: `Paying $${price}.`,
+            title: `Pay $${price}.`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -93,40 +94,40 @@ const CheckoutForm = () => {
                 } else {
                     console.log('payment intent', paymentIntent)
                     if (paymentIntent.status === 'succeeded') {
-                        console.log(paymentIntent.id);
                         setTransactionId(paymentIntent.id);
                         setPaymentSuccess(true);
 
                         // saving payment history on the database
-                        // const paymentInfo = {
-                        //     contestName: payContest?.contestName,
-                        //     contestType: payContest?.contestType,
-                        //     creatorEmail: payContest?.creatorEmail,
-                        //     email: user?.email,
-                        //     name: user?.displayName,
-                        //     img: user?.photoURL,
-                        //     price,
-                        //     transactionId: paymentIntent.id,
-                        //     date: new Date(),
-                        //     contestId: payContest?._id,
-                        //     isWin: false,
-                        //     prizeMoney: payContest?.prizeMoney,
-                        //     submittedTask
-                        // }
+                        const paymentInfo = {
+                            email: user?.email,
+                            name: user?.displayName,
+                            img: user?.photoURL,
+                            price,
+                            transactionId: paymentIntent.id,
+                            date: new Date().toLocaleString(),
+                            isDelivered: false, //admin will update it 
+                            isReceived: false //user will update it
+                        }
 
                         // saving to data base
-                        // const dbResult = await secureAxios.post('/payments', paymentInfo)
-                        // if (dbResult?.data?.insertedId) {
-                        //     setLoading(false)
-                        //     await Swal.fire({
-                        //         position: "center",
-                        //         icon: "success",
-                        //         title: `Successfully paid $${price}`,
-                        //         showConfirmButton: false,
-                        //         timer: 1500
-                        //     });
-                        //     navigate('/dashboard/user/participations');
-                        // }
+                        try {
+                            const dbResult = await secureAxios.post('/payments', paymentInfo)
+                            if (dbResult?.data?.insertedId) {
+                                await refetch();
+                                setLoading(false);
+                                await Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: `Successfully paid $${price}`,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                navigate('/');
+                            }
+                        } catch (error) {
+                            setLoading(false)
+                            toast.error('Oops!')
+                        }
                     }
                 }
             } else {
@@ -134,6 +135,7 @@ const CheckoutForm = () => {
                     title: "Payment cancelled!",
                     icon: "info"
                 });
+                setLoading(false)
             }
         });
     };
