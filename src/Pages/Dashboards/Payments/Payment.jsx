@@ -8,11 +8,11 @@ import paymentLottie from '../../../assets/LottieAnimations/payment.json'
 const stripePromise = loadStripe(import.meta.env.VITE_stripe_payment_pk);
 const Payment = () => {
     return (
-        <div className="max-h-screen">
+        <div>
             <Helmet>
                 <title>Commerce-Book | Payment</title>
             </Helmet>
-            <div className="relative z-50">
+            <div className="relative z-50 translate-y-5">
                 <Elements stripe={stripePromise}>
                     <CheckoutForm />
                 </Elements>

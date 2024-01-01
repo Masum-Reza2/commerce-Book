@@ -58,7 +58,8 @@ const AddProduct = () => {
                         quantity: Number.parseFloat(data?.quantity),
                         image: imageUrl || null,
                         likes: [],
-                        comments: []
+                        comments: [],
+                        isReported: false,
                     }
                     await secureAxios.post(`/products`, product);
                     setLoading(false);

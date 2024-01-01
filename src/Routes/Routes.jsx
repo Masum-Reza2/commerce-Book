@@ -15,6 +15,7 @@ import UserRoute from "./UserRoute"
 import Cart from "../Pages/Dashboards/Cart/Cart"
 import Payment from "../Pages/Dashboards/Payments/Payment"
 import PaymentHistory from "../Pages/Dashboards/PaymentHistory/PaymentHistory"
+import UserHome from "../Pages/Dashboards/UserDashboard/UserHome"
 
 const Routes = createBrowserRouter([
     {
@@ -30,6 +31,7 @@ const Routes = createBrowserRouter([
         path: '/userDashboard',
         element: <UserRoute><UserDashboard /></UserRoute>,
         children: [
+            { index: true, element: <UserHome /> },
             { path: 'cart', element: <Cart /> },
             { path: 'payment', element: <Payment /> },
             { path: 'paymentHistory', element: <PaymentHistory /> },
