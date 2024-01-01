@@ -22,6 +22,7 @@ import useCartNumber from '../../../Hooks/useCartNumber';
 import useProducts from '../../../Hooks/useProducts';
 import useProduct from '../../../Hooks/useProduct';
 import { Link } from 'react-router-dom';
+import useRole from '../../../Hooks/useRole';
 
 
 const Demo = styled('div')(({ theme }) => ({
@@ -36,6 +37,8 @@ export default function CartItems() {
     const { refetch: cartNumberRefetch } = useCartNumber();
     const { refetch: productsRefetch } = useProducts();
     const { refetch: productRefetch } = useProduct();
+    const { userRole } = useRole();
+    const role = userRole?.role;
 
     const handleRemoveCart = (cartId, productId) => {
         Swal.fire({
@@ -73,7 +76,7 @@ export default function CartItems() {
                     <Demo className='shadow rounded-lg'>
                         <List>
                             {carts?.map((cart, index) => {
-                                return <ListItem key={cart?._id}
+                                return <ListItem className='bg-orange-100' key={cart?._id}
                                     secondaryAction={
                                         <IconButton onClick={() => handleRemoveCart(cart?._id, cart?.productId)} edge="end" aria-label="delete">
                                             <DeleteIcon />
@@ -102,7 +105,7 @@ export default function CartItems() {
             <Divider variant="middle" />
             <Typography className='text-center pb-5 md:pb-0 font-bold' variant='h6'>Total Price : ${totalPrice}</Typography>
             <div className='text-center'>
-                <Link to={'/userDashboard/payment'}>
+                <Link to={(role === 'user' && '/userDashboard/payment') || (role === 'seller' && '/sellerDashboard/payment') || (role === 'admin' && '/adminDashboard/payment')}>
                     <Button variant="contained">Place-Order</Button>
                 </Link>
             </div>

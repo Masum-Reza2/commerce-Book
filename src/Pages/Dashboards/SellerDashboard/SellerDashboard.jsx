@@ -16,6 +16,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useCartNumber from '../../../Hooks/useCartNumber';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import Logout from '../../../Components/Logout';
 
 export default function SellerDashboard() {
   const [state, setState] = React.useState({
@@ -33,6 +35,8 @@ export default function SellerDashboard() {
     setState({ ...state, [anchor]: open });
   };
   const { cartNumber } = useCartNumber();
+
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -64,6 +68,17 @@ export default function SellerDashboard() {
           </ListItem>
         </NavLink>
 
+        <NavLink to={'/sellerDashboard/paymentHistory'}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <WorkHistoryIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Payment History`} />
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
+
       </List>
 
       <Divider />
@@ -76,6 +91,7 @@ export default function SellerDashboard() {
           <ListItemText primary={'Home'} />
         </ListItemButton>
       </Link>
+      <Logout />
     </Box>
   );
 

@@ -15,6 +15,8 @@ import ListIcon from '@mui/icons-material/List';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useCartNumber from '../../../Hooks/useCartNumber';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import Logout from '../../../Components/Logout';
 
 export default function AdminDashboard() {
   const [state, setState] = React.useState({
@@ -52,6 +54,17 @@ export default function AdminDashboard() {
           </ListItem>
         </NavLink>
 
+        <NavLink to={'/adminDashboard/paymentHistory'}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <WorkHistoryIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Payment History`} />
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
+
       </List>
 
       <Divider />
@@ -64,6 +77,7 @@ export default function AdminDashboard() {
           <ListItemText primary={'Home'} />
         </ListItemButton>
       </Link>
+      <Logout />
     </Box>
   );
 

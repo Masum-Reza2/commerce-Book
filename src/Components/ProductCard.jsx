@@ -128,6 +128,7 @@ export default function ProductCard({ product, refetch }) {
             }
             await secureAxios.put(`/addTocart`, cartProduct);
             await cartNumberRefetch();
+            toast.success('Added to cart.')
             setQty(qty - 1);
         } catch (error) {
             toast.error(error?.message);

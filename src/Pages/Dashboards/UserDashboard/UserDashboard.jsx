@@ -15,6 +15,8 @@ import ListIcon from '@mui/icons-material/List';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useCartNumber from '../../../Hooks/useCartNumber';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import Logout from '../../../Components/Logout';
 
 export default function UserDashboard() {
   const [state, setState] = React.useState({
@@ -43,13 +45,24 @@ export default function UserDashboard() {
     >
       <List>
 
-        <NavLink className='bg-red-500' to={'/userDashboard/cart'}>
+        <NavLink to={'/userDashboard/cart'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <ShoppingCartIcon />
               </ListItemIcon>
               <ListItemText primary={`My Cart (${cartNumber?.cartCount || 0})`} />
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
+
+        <NavLink to={'/userDashboard/paymentHistory'}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <WorkHistoryIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Payment History`} />
             </ListItemButton>
           </ListItem>
         </NavLink>
@@ -66,6 +79,7 @@ export default function UserDashboard() {
           <ListItemText primary={'Home'} />
         </ListItemButton>
       </Link>
+      <Logout />
     </Box>
   );
 

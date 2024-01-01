@@ -11,7 +11,6 @@ const ControlRoom = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [searchText, setSearchText] = useState('');
     const publicAxios = usePublicAxios();
-
     // >>>>>>firebase functions<<<<<<
 
     // 1 create account
@@ -101,7 +100,7 @@ const ControlRoom = ({ children }) => {
         deleteHimOrHer,
         additionalLogin,
         searchText,
-        setSearchText
+        setSearchText,
     }
     return (
         <GlobalContext.Provider value={globalInfo}>
