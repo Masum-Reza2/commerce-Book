@@ -16,6 +16,7 @@ import Cart from "../Pages/Dashboards/Cart/Cart"
 import Payment from "../Pages/Dashboards/Payments/Payment"
 import PaymentHistory from "../Pages/Dashboards/PaymentHistory/PaymentHistory"
 import UserHome from "../Pages/Dashboards/UserDashboard/UserHome"
+import AdminHome from "../Pages/Dashboards/AdminDashboard/AdminHome"
 
 const Routes = createBrowserRouter([
     {
@@ -54,6 +55,7 @@ const Routes = createBrowserRouter([
         path: '/adminDashboard',
         element: <AdminRoute><AdminDashboard /></AdminRoute>,
         children: [
+            { index: true, element: <AdminHome /> },
             { path: 'cart', element: <Cart /> },
             { path: 'payment', element: <Payment /> },
             { path: 'paymentHistory', element: <PaymentHistory /> },
