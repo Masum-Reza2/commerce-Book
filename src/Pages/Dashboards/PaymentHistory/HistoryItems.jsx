@@ -53,7 +53,7 @@ export default function HistoryItems() {
 
     if (isPending) return <Spinner />
     return (
-        <TableContainer component={Paper}>
+        <TableContainer className='border' component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>

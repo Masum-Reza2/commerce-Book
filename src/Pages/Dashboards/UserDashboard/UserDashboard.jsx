@@ -79,6 +79,7 @@ export default function UserDashboard() {
           <ListItemText primary={'Home'} />
         </ListItemButton>
       </Link>
+
       <Logout />
     </Box>
   );

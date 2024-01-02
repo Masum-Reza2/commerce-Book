@@ -18,6 +18,8 @@ import PaymentHistory from "../Pages/Dashboards/PaymentHistory/PaymentHistory"
 import UserHome from "../Pages/Dashboards/UserDashboard/UserHome"
 import AdminHome from "../Pages/Dashboards/AdminDashboard/AdminHome"
 import UserPayments from "../Pages/Dashboards/AdminDashboard/UserPayments"
+import ManageUsers from "../Pages/Dashboards/AdminDashboard/ManageUsers"
+import Settings from "../Pages/Settings/Settings"
 
 const Routes = createBrowserRouter([
     {
@@ -37,6 +39,7 @@ const Routes = createBrowserRouter([
             { path: 'cart', element: <Cart /> },
             { path: 'payment', element: <Payment /> },
             { path: 'paymentHistory', element: <PaymentHistory /> },
+            { path: 'settings', element: <Settings /> },
         ]
     },
     // sellerDashboard
@@ -49,6 +52,7 @@ const Routes = createBrowserRouter([
             { path: 'cart', element: <Cart /> },
             { path: 'payment', element: <Payment /> },
             { path: 'paymentHistory', element: <PaymentHistory /> },
+            { path: 'settings', element: <Settings /> },
         ]
     },
     // adminDashboard
@@ -61,6 +65,8 @@ const Routes = createBrowserRouter([
             { path: 'payment', element: <Payment /> },
             { path: 'paymentHistory', element: <PaymentHistory /> },
             { path: 'userPayments', element: <UserPayments /> },
+            { path: 'manageUsers', element: <ManageUsers /> },
+            { path: 'settings', element: <Settings /> },
         ]
     },
     { path: '/register', element: <RegisterPage /> },
