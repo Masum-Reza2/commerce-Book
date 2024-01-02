@@ -104,7 +104,7 @@ export default function CommentModal({ id, refetch }) {
                 <Fade in={open}>
                     <Box className='max-w-xs md:max-w-lg space-y-2' sx={style}>
                         <Typography id="transition-modal-title" variant="h6" component="h2">
-                            Your Comment
+                            Write a Comment
                         </Typography>
                         <form className='space-y-2' onSubmit={handleSubmit(onSubmit)}>
                             <TextField

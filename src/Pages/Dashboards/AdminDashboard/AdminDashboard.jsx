@@ -17,6 +17,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useCartNumber from '../../../Hooks/useCartNumber';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import Logout from '../../../Components/Logout';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 
 export default function AdminDashboard() {
   const [state, setState] = React.useState({
@@ -42,6 +43,17 @@ export default function AdminDashboard() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
+
+        <NavLink to={'/adminDashboard/userPayments'}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <CreditScoreIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Manage Payments`} />
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
 
         <NavLink to={'/adminDashboard/cart'}>
           <ListItem disablePadding>

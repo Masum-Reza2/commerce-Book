@@ -17,6 +17,7 @@ import Payment from "../Pages/Dashboards/Payments/Payment"
 import PaymentHistory from "../Pages/Dashboards/PaymentHistory/PaymentHistory"
 import UserHome from "../Pages/Dashboards/UserDashboard/UserHome"
 import AdminHome from "../Pages/Dashboards/AdminDashboard/AdminHome"
+import UserPayments from "../Pages/Dashboards/AdminDashboard/UserPayments"
 
 const Routes = createBrowserRouter([
     {
@@ -59,6 +60,7 @@ const Routes = createBrowserRouter([
             { path: 'cart', element: <Cart /> },
             { path: 'payment', element: <Payment /> },
             { path: 'paymentHistory', element: <PaymentHistory /> },
+            { path: 'userPayments', element: <UserPayments /> },
         ]
     },
     { path: '/register', element: <RegisterPage /> },
