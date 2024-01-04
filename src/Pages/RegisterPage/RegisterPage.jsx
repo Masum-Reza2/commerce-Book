@@ -51,6 +51,7 @@ const RegisterPage = () => {
                 timer: 2000
             });
             verificationEmail();
+            toast.success(`Verification mail sent to ${userInfo?.email}`)
             await logOutUser();
             setLoading(false);
             navigate('/login');
