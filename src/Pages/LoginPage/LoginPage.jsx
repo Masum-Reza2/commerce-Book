@@ -9,6 +9,7 @@ import loginLottie from '../../assets/LottieAnimations/login (1).json'
 import useGlobal from "../../Hooks/useGlobal"
 import { TbFidgetSpinner } from "react-icons/tb"
 import toast from "react-hot-toast"
+import ForgetPassword from "./ForgetPassword"
 
 /* eslint-disable react/no-unescaped-entities */
 const LoginPage = () => {
@@ -81,7 +82,7 @@ const LoginPage = () => {
                         </label>
                         {eye ? <FaEyeSlash onClick={handleEye} className="absolute right-5 top-4 cursor-pointer" /> : <FaEye onClick={handleEye} className="absolute right-5 top-4 cursor-pointer" />}
                     </div>
-
+                    <ForgetPassword />
                 </div>
                 <div className="p-6 pt-0">
                     <button
