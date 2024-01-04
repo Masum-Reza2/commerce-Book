@@ -19,7 +19,7 @@ const RegisterPage = () => {
     const handleEye = () => {
         setEye(!eye)
     }
-    const { createAccount, logOutUser, updateUserProfile } = useGlobal();
+    const { createAccount, logOutUser, updateUserProfile, verificationEmail } = useGlobal();
     const navigate = useNavigate();
     const publicAxios = usePublicAxios();
 
@@ -50,6 +50,7 @@ const RegisterPage = () => {
                 showConfirmButton: false,
                 timer: 2000
             });
+            verificationEmail();
             await logOutUser();
             setLoading(false);
             navigate('/login');

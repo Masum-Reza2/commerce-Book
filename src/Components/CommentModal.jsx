@@ -84,7 +84,7 @@ export default function CommentModal({ id, refetch }) {
         }
     }
     return (
-        <div className=''>
+        <div>
             <IconButton onClick={handleOpen} aria-label="comment">
                 <AddCommentIcon />
             </IconButton>

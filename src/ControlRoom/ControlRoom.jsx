@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react"
 export const GlobalContext = createContext();
-import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import usePublicAxios from "../Hooks/usePublicAxios";
 
@@ -44,10 +44,21 @@ const ControlRoom = ({ children }) => {
         return updateEmail(auth.currentUser, newEmail)
     }
 
+    // send email verification link
+    const verificationEmail = () => {
+        return sendEmailVerification(auth.currentUser);
+    }
+
     // 6 update user password
     const updateUserPassword = (newPassword) => {
         setLoading(true);
         return updatePassword(user, newPassword)
+    }
+
+    // send password reset mail
+    const passResMail = (email) => {
+        setLoading(true);
+        return sendPasswordResetEmail(auth, email)
     }
 
     // 7 delete a user
@@ -101,6 +112,8 @@ const ControlRoom = ({ children }) => {
         additionalLogin,
         searchText,
         setSearchText,
+        passResMail,
+        verificationEmail
     }
     return (
         <GlobalContext.Provider value={globalInfo}>
