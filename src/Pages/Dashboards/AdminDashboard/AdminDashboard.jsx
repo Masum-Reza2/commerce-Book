@@ -36,6 +36,12 @@ export default function AdminDashboard() {
     setState({ ...state, [anchor]: open });
   };
   const { cartNumber } = useCartNumber();
+  const handleActiveNav = ({ isActive, isPending }) =>
+    isActive
+      ? "text-blue-700 font-bold"
+      : isPending
+        ? "pending"
+        : ""
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -45,7 +51,7 @@ export default function AdminDashboard() {
     >
       <List>
 
-        <NavLink to={'/adminDashboard/userPayments'}>
+        <NavLink className={handleActiveNav} to={'/adminDashboard/userPayments'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -56,7 +62,7 @@ export default function AdminDashboard() {
           </ListItem>
         </NavLink>
 
-        <NavLink to={'/adminDashboard/manageUsers'}>
+        <NavLink className={handleActiveNav} to={'/adminDashboard/manageUsers'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -67,7 +73,7 @@ export default function AdminDashboard() {
           </ListItem>
         </NavLink>
 
-        <NavLink to={'/adminDashboard/cart'}>
+        <NavLink className={handleActiveNav} to={'/adminDashboard/cart'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -78,7 +84,7 @@ export default function AdminDashboard() {
           </ListItem>
         </NavLink>
 
-        <NavLink to={'/adminDashboard/paymentHistory'}>
+        <NavLink className={handleActiveNav} to={'/adminDashboard/paymentHistory'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>

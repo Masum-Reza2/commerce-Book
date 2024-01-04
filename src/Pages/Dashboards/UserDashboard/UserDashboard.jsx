@@ -36,6 +36,13 @@ export default function UserDashboard() {
 
   const { cartNumber } = useCartNumber();
 
+  const handleActiveNav = ({ isActive, isPending }) =>
+    isActive
+      ? "text-blue-700 font-bold"
+      : isPending
+        ? "pending"
+        : ""
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -45,7 +52,7 @@ export default function UserDashboard() {
     >
       <List>
 
-        <NavLink to={'/userDashboard/cart'}>
+        <NavLink className={handleActiveNav} to={'/userDashboard/cart'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -56,7 +63,7 @@ export default function UserDashboard() {
           </ListItem>
         </NavLink>
 
-        <NavLink to={'/userDashboard/paymentHistory'}>
+        <NavLink className={handleActiveNav} to={'/userDashboard/paymentHistory'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>

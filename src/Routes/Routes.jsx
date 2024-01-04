@@ -20,6 +20,7 @@ import AdminHome from "../Pages/Dashboards/AdminDashboard/AdminHome"
 import UserPayments from "../Pages/Dashboards/AdminDashboard/UserPayments"
 import ManageUsers from "../Pages/Dashboards/AdminDashboard/ManageUsers"
 import Settings from "../Pages/Settings/Settings"
+import BecomeSeller from "../Pages/BecomeSeller/BecomeSeller"
 
 const Routes = createBrowserRouter([
     {
@@ -40,6 +41,7 @@ const Routes = createBrowserRouter([
             { path: 'payment', element: <Payment /> },
             { path: 'paymentHistory', element: <PaymentHistory /> },
             { path: 'settings', element: <Settings /> },
+            { path: 'becomeSeller', element: <BecomeSeller /> },
         ]
     },
     // sellerDashboard

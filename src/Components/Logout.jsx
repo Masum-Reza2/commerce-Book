@@ -12,6 +12,13 @@ const Logout = () => {
     const { userRole } = useRole();
     const role = userRole?.role;
 
+    const handleActiveNav = ({ isActive, isPending }) =>
+        isActive
+            ? "text-blue-700 font-bold"
+            : isPending
+                ? "pending"
+                : ""
+
     const handleLogout = async () => {
         Swal.fire({
             title: "Confirm Logout?",
@@ -34,7 +41,7 @@ const Logout = () => {
     }
     return (
         <div className='absolute bottom-1 w-full space-y-1'>
-            <NavLink to={(role === 'user' && '/userDashboard/settings') || (role === 'seller' && '/sellerDashboard/settings') || (role === 'admin' && '/adminDashboard/settings')}>
+            <NavLink className={handleActiveNav} to={(role === 'user' && '/userDashboard/settings') || (role === 'seller' && '/sellerDashboard/settings') || (role === 'admin' && '/adminDashboard/settings')}>
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>

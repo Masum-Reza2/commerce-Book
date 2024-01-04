@@ -6,10 +6,13 @@ import UpdateName from './UpdateName'
 import useGlobal from "../../Hooks/useGlobal";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useRole from "../../Hooks/useRole";
 
 
 const Settings = () => {
+    const { userRole } = useRole();
+    const role = userRole?.role;
     const navigate = useNavigate();
     const { deleteHimOrHer } = useGlobal();
     const handledeleteUser = () => {
@@ -43,11 +46,17 @@ const Settings = () => {
                 <Button onClick={handledeleteUser} color="error" variant="contained" startIcon={<DeleteIcon />}>
                     Delete Account
                 </Button>
+                {
+                    role === 'user' && <Link to={'/userDashboard/becomeSeller'}>
+                        <Button className="w-full" color="success" variant="contained">Become a seller?</Button>
+                    </Link>
+                }
+
             </div>
             <div className="col-span-12 md:col-span-4 order-1 md:order-2 ">
                 <Lottie animationData={settingsLottie} loop={true} />
             </div>
-        </div>
+        </div >
     )
 }
 

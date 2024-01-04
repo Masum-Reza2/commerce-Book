@@ -35,7 +35,12 @@ export default function SellerDashboard() {
     setState({ ...state, [anchor]: open });
   };
   const { cartNumber } = useCartNumber();
-
+  const handleActiveNav = ({ isActive, isPending }) =>
+    isActive
+      ? "text-blue-700 font-bold"
+      : isPending
+        ? "pending"
+        : ""
 
   const list = (anchor) => (
     <Box
@@ -46,7 +51,7 @@ export default function SellerDashboard() {
     >
       <List>
 
-        <NavLink to={'/sellerDashboard/addProduct'}>
+        <NavLink className={handleActiveNav} to={'/sellerDashboard/addProduct'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -57,7 +62,7 @@ export default function SellerDashboard() {
           </ListItem>
         </NavLink>
 
-        <NavLink to={'/sellerDashboard/cart'}>
+        <NavLink className={handleActiveNav} to={'/sellerDashboard/cart'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -68,7 +73,7 @@ export default function SellerDashboard() {
           </ListItem>
         </NavLink>
 
-        <NavLink to={'/sellerDashboard/paymentHistory'}>
+        <NavLink className={handleActiveNav} to={'/sellerDashboard/paymentHistory'}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
