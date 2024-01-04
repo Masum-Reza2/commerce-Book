@@ -116,11 +116,12 @@ const SellerForm = () => {
                             await Swal.fire({
                                 position: "center",
                                 icon: "success",
-                                title: `Paid $ ${price}`,
+                                title: `Paid $ ${price} and requested!`,
                                 showConfirmButton: false,
                                 timer: 1500
                             });
                             setLoading(false);
+                            return navigate('/')
                         } catch (error) {
                             toast.error(error?.message);
                             setLoading(false);
