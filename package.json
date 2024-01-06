@@ -31,6 +31,7 @@
     "react-loader-spinner": "^6.1.0",
     "react-parallax-tilt": "^1.7.177",
     "react-router-dom": "^6.21.0",
+    "socket.io-client": "^4.7.3",
     "sort-by": "^1.2.0",
     "sweetalert2": "^11.10.1"
   },

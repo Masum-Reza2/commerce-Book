@@ -21,6 +21,7 @@ import UserPayments from "../Pages/Dashboards/AdminDashboard/UserPayments"
 import ManageUsers from "../Pages/Dashboards/AdminDashboard/ManageUsers"
 import Settings from "../Pages/Settings/Settings"
 import BecomeSeller from "../Pages/BecomeSeller/BecomeSeller"
+import Chat from "../Pages/Chat/Chat"
 
 const Routes = createBrowserRouter([
     {
@@ -28,7 +29,8 @@ const Routes = createBrowserRouter([
         element: <Layout />,
         errorElement: <ErrorPage />,
         children: [
-            { path: '/', element: <Home /> }
+            { path: '/', element: <Home /> },
+            { path: '/message', element: <Chat /> },
         ]
     },
     // userDashboard
