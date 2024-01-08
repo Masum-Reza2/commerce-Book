@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://commerce-book-server.vercel.app',
+    baseURL: 'http://localhost:5000',
     headers: { token: localStorage.getItem('token') }
 });
 
