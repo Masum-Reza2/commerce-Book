@@ -5,10 +5,11 @@ import useProducts from "../../Hooks/useProducts";
 import SkeletonCom from "../../Components/Skeleton";
 import ProductCard from "../../Components/ProductCard";
 import useGlobal from "../../Hooks/useGlobal";
+import useRole from "../../Hooks/useRole";
 
 
 const Home = () => {
-    const { searchText } = useGlobal();
+    const { searchText, user } = useGlobal();
     const { productCount } = useProductCount();
     const totalProduct = productCount?.productCount || 0;
     const [page, setPage] = React.useState(1);
@@ -16,16 +17,21 @@ const Home = () => {
         setPage(value);
     };
     const { products, isPending, refetch } = useProducts(page, 10, searchText);
+    const { userRole } = useRole();
 
     if (isPending) return <SkeletonCom />
     return (
         <div className='grid py-5  grid-cols-12'>
-            <div className='col-span-3 border hidden md:block h-screen overflow-y-auto'>lorem500</div>
+            <div className='col-span-3 border hidden md:block h-screen overflow-y-auto'>
+                <img className="p-3 md:max-w-[180px] lg:max-w-[300px] mx-auto" src={user?.photoURL} alt="" />
+                <h5 className="text-xl text-center font-bold">{user?.displayName}</h5>
+                <p className="text-center">You are a <span className="font-semibold text-green-500">{userRole?.role}</span></p>
+            </div>
 
             <div className="h-screen col-span-12 md:col-span-6 flex flex-col items-center overflow-y-auto">
                 <div className="grid grid-cols-1 gap-5 px-2 md:px-4">
                     {
-                        products?.map(product => <ProductCard product={product} key={product?._id} refetch={refetch} />)
+                        products?.reverse()?.map(product => <ProductCard product={product} key={product?._id} refetch={refetch} />)
                     }
                     {!products?.length && <h1 className="font-bold text-xl">No products found for <span className="italic">{`'${searchText}'`}</span></h1>}
                 </div>

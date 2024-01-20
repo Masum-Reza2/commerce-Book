@@ -15,14 +15,14 @@ import { Toaster } from 'react-hot-toast'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <ControlRoom>
-        <HelmetProvider>
-          <RouterProvider router={Routes} />
-        </HelmetProvider>
-      </ControlRoom>
-    </QueryClientProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <Toaster />
+    <ControlRoom>
+      <HelmetProvider>
+        <RouterProvider router={Routes} />
+      </HelmetProvider>
+    </ControlRoom>
+  </QueryClientProvider>
+  // </React.StrictMode>,
 )
