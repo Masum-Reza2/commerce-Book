@@ -68,7 +68,7 @@ function Navbar() {
             </NavLink>
             <Typography className='text-white font-bold absolute top-0 right-2 lg:right-2'>{cartNumber?.cartCount}</Typography>
         </Button>
-        <Button
+        {/* <Button
             className='relative'
             onClick={handleCloseNavMenu}
             sx={{ my: 2, display: 'block' }}
@@ -76,7 +76,7 @@ function Navbar() {
             <NavLink to={'/message'} className='text-white hover:bg-gray-500 bg-gray-500 lg:bg-transparent p-3 hover:border-b-[5px] rounded-[10%] hover:border-black'>
                 <ForumIcon />
             </NavLink>
-        </Button>
+        </Button> */}
     </div>
 
     return (

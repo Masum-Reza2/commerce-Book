@@ -40,7 +40,9 @@ const Home = () => {
                 </Stack>
             </div>
 
-            <div className='col-span-3 border hidden md:block h-screen overflow-y-auto'>hello</div>
+            <div className='col-span-3 border hidden h-screen overflow-y-auto md:flex items-center justify-center'>
+                <i className="font-bold">Stay Hungry Stay Foolish</i>
+            </div>
         </div>
     )
 }
